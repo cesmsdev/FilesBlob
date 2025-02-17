@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+    
+    <div class="col-12 d-flex flex-column align-items-center gap-2">
+        <h3 class="fs-5 font-Poppins_SemiBold text-center">Agregar contacto usando la cámara</h3>
+        <div id="container-camera" class="col-12 d-flex flex-column align-items-center gap-2">
+            <video data-ac-camera="preview" class="shadow col-10 rounded-10 my-2" style="height: 150px;" autoplay></video>
+            <canvas data-ac-camera="canvas" style="display: none;"></canvas>
+            <input type="file" data-ac-camera="file" accept="image/png" class="d-none" name="imageFile" />
+            <div class="d-flex justify-content-center align-items-center gap-3 flex-wrap">
+                <button data-ac-camera="start" type="button" class="btn rounded-10 shadow-2-10 font-Poppins_SemiBold font-14">Abrir Cámara</button>
+                <button data-ac-camera="capture" type="button" class="btn rounded-10 shadow-2-10 font-Poppins_SemiBold font-14">Tomar Foto</button>
+                <button data-ac-camera="stop" type="button" class="btn rounded-10 shadow-2-10 btn-default font-Poppins_SemiBold font-14">Cerrar Cámara</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/notification.js"></script>
+    <script src="assets/js/camera-handler.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
