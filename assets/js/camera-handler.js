@@ -86,6 +86,8 @@ class CameraHandler {
     }
 
     async uploadFile(file) {
+        this.showMessage("hsklafjgh", "success");
+        
         let busyLoad = new BusyLoader({ text: "Leyendo datos de la tarjeta...", textColor: "#000000", backgroundColor: "#ffffff", fullScreen: false, targetSelector: "#container-camera" });
         busyLoad.start();
 
