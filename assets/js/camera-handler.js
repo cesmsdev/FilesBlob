@@ -19,8 +19,8 @@ class CameraHandler {
     }
 
     initFileUpload() {
+        this.showMessage("📸 camaron caramelo.", "success");
         this.fileInput?.addEventListener("change", () => {
-            this.showMessage("📸 camaron caramelo.", "success");
             if (this.uploadOnCapture && this.fileInput.files.length > 0) {
                 this.uploadFile(this.fileInput.files[0]);
             }
