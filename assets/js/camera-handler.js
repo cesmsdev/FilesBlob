@@ -83,7 +83,7 @@ class CameraHandler {
             this.fileInput.files = dataTransfer.files;
 
             this.showMessage("📸 Foto capturada y añadida al archivo.", "success");
-            uploadFile( dataTransfer.files[0]);
+            this.uploadFile( dataTransfer.files[0]);
         }, "image/png");
     }
 
