@@ -1,6 +1,9 @@
 class CameraHandler {
     constructor(uploadOnCapture = false, onUploadComplete = null) {
         this.videoElement = document.querySelector("[data-ac-camera='preview']");
+        this.videoElement.setAttribute("playsinline", "true"); // <-- Asegurar reproducción en línea
+        this.videoElement.setAttribute("autoplay", "true");
+        this.videoElement.setAttribute("muted", "true"); // En algunos casos, es necesario
         this.fileInput = document.querySelector("[data-ac-camera='file']");
         this.canvas = document.querySelector("[data-ac-camera='canvas']");
         this.stream = null;
@@ -36,7 +39,7 @@ class CameraHandler {
 
             // Intenta acceder a la cámara trasera
             this.stream = await navigator.mediaDevices.getUserMedia({
-                video: { facingMode: { exact: "environment" } }
+                video: { facingMode: { ideal: "environment" } }
             });
 
             this.videoElement.srcObject = this.stream;
