@@ -1,5 +1,5 @@
 class CameraHandler {
-    constructor(uploadOnCapture = false, onUploadComplete = null) {
+    constructor(uploadOnCapture = false, onUploadComplete = null, scanQr = false) {
         this.videoElement = document.querySelector("[data-ac-camera='preview']");
         this.videoElement.setAttribute("playsinline", "true"); // <-- Asegurar reproducción en línea
         this.videoElement.setAttribute("autoplay", "true");
@@ -7,7 +7,8 @@ class CameraHandler {
         this.fileInput = document.querySelector("[data-ac-camera='file']");
         this.canvas = document.querySelector("[data-ac-camera='canvas']");
         this.stream = null;
-
+        this.scanQr = scanQr;
+        this.isScanning = false;
         this.uploadOnCapture = uploadOnCapture;
         this.onUploadComplete = onUploadComplete; // Callback para la respuesta del servidor
 
@@ -44,10 +45,40 @@ class CameraHandler {
 
             this.videoElement.srcObject = this.stream;
             this.videoElement.play();
+
+            if (this.scanQr) { this.startQrScanner(); }
+
             this.showMessage("📷 Cámara activada correctamente.", "info");
         } catch (error) {
             this.handleCameraError(error);
         }
+    }
+
+    async startQrScanner() {
+        if (!this.canvasQR) return;
+        this.isScanning = true;
+        this.scanFrameForQr();
+    }
+
+    scanFrameForQr() {
+        if (!this.isScanning) return;
+
+        const context = this.canvasQR.getContext("2d", { willReadFrequently: true });
+        this.canvasQR.width = this.videoElement.videoWidth;
+        this.canvasQR.height = this.videoElement.videoHeight;
+        context.drawImage(this.videoElement, 0, 0, this.canvasQR.width, this.canvasQR.height);
+        const imageData = context.getImageData(0, 0, this.canvasQR.width, this.canvasQR.height);
+        const qrCode = jsQR(imageData.data, imageData.width, imageData.height);
+        if (qrCode) {
+            if (qrCode.data.length > 5) {
+                alert("QR Detectado: " + qrCode.data);
+                setTimeout(() => {
+                    requestAnimationFrame(() => this.scanFrameForQr());
+                }, 1000); // Ajusta el tiempo si es necesario
+                return;
+            }
+        }
+        requestAnimationFrame(() => this.scanFrameForQr());
     }
 
     handleCameraError(error) {
@@ -86,33 +117,33 @@ class CameraHandler {
             this.fileInput.files = dataTransfer.files;
 
             this.showMessage("📸 Foto capturada y añadida al archivo.", "success");
-            this.uploadFile( dataTransfer.files[0]);
+            this.uploadFile(dataTransfer.files[0]);
         }, "image/png");
     }
 
     async uploadFile(file) {
         this.showMessage("hsklafjgh", "success");
-        
+
         let busyLoad = new BusyLoader({ text: "Leyendo datos de la tarjeta...", textColor: "#000000", backgroundColor: "#ffffff", fullScreen: false, targetSelector: "#container-camera" });
         busyLoad.start();
 
         let formData = new FormData();
         formData.append("imageFile", file);
 
-        try {
-            let response = await fetch("/Google/Vision/UploadImage", {
-                method: "POST",
-                body: formData
-            });
+        // try {
+        //     let response = await fetch("/Google/Vision/UploadImage", {
+        //         method: "POST",
+        //         body: formData
+        //     });
 
-            let result = await response.json();
-            // Ejecuta el callback si está definido
-            if (typeof this.onUploadComplete === "function") {
-                this.onUploadComplete(result);
-            }
-        } catch (error) {
-            this.showMessage("Error al subir el archivo.", "error");
-        }
+        //     let result = await response.json();
+        //     // Ejecuta el callback si está definido
+        //     if (typeof this.onUploadComplete === "function") {
+        //         this.onUploadComplete(result);
+        //     }
+        // } catch (error) {
+        //     this.showMessage("Error al subir el archivo.", "error");
+        // }
 
         busyLoad.stop();
     }
