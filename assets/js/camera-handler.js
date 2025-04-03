@@ -62,11 +62,11 @@ class CameraHandler {
     scanFrameForQr() {
         if (!this.isScanning) return;
 
-        const context = this.canvasQR.getContext("2d", { willReadFrequently: true });
-        this.canvasQR.width = this.videoElement.videoWidth;
-        this.canvasQR.height = this.videoElement.videoHeight;
-        context.drawImage(this.videoElement, 0, 0, this.canvasQR.width, this.canvasQR.height);
-        const imageData = context.getImageData(0, 0, this.canvasQR.width, this.canvasQR.height);
+        const context = this.canvas.getContext("2d", { willReadFrequently: true });
+        this.canvas.width = this.videoElement.videoWidth;
+        this.canvas.height = this.videoElement.videoHeight;
+        context.drawImage(this.videoElement, 0, 0, this.canvas.width, this.canvas.height);
+        const imageData = context.getImageData(0, 0, this.canvas.width, this.canvas.height);
         const qrCode = jsQR(imageData.data, imageData.width, imageData.height);
         if (qrCode) {
             if (qrCode.data.length > 5) {
