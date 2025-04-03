@@ -23,7 +23,6 @@ class CameraHandler {
     }
 
     initFileUpload() {
-        this.showMessage("📸 camaron caramelo.", "success");
         this.fileInput?.addEventListener("change", () => {
             if (this.uploadOnCapture && this.fileInput.files.length > 0) {
                 this.uploadFile(this.fileInput.files[0]);
@@ -71,7 +70,7 @@ class CameraHandler {
         const qrCode = jsQR(imageData.data, imageData.width, imageData.height);
         if (qrCode) {
             if (qrCode.data.length > 5) {
-                alert("QR Detectado: " + qrCode.data);
+                this.uploadFile(null, dataQr);
                 setTimeout(() => {
                     requestAnimationFrame(() => this.scanFrameForQr());
                 }, 1000); // Ajusta el tiempo si es necesario
@@ -117,18 +116,21 @@ class CameraHandler {
             this.fileInput.files = dataTransfer.files;
 
             this.showMessage("📸 Foto capturada y añadida al archivo.", "success");
-            this.uploadFile(dataTransfer.files[0]);
+            this.uploadFile(dataTransfer.files[0], null);
         }, "image/png");
     }
 
-    async uploadFile(file) {
-        this.showMessage("hsklafjgh", "success");
+    async uploadFile(file, dataQr) {
 
         let busyLoad = new BusyLoader({ text: "Leyendo datos de la tarjeta...", textColor: "#000000", backgroundColor: "#ffffff", fullScreen: false, targetSelector: "#container-camera" });
         busyLoad.start();
 
         let formData = new FormData();
-        formData.append("imageFile", file);
+
+        if (file != null) { formData.append("imageFile", file); }
+        if (dataQr != null) { formData.append("dataQr", dataQr); }
+
+        this.showMessage("Se van a enviar los datos" + formData, "success");
 
         // try {
         //     let response = await fetch("/Google/Vision/UploadImage", {
