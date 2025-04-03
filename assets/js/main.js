@@ -17,4 +17,4 @@ const camera = new CameraHandler(true, (response) => {
         let result = JSON.parse(response)
         notification.personalizedMessage("bottom", "Ocurrio un error: " + result.Detail + result.BillingUrl, "error");
     }
-});
+}, true);
