@@ -104,7 +104,7 @@ class CameraHandler {
             return;
         }
 
-        const context = this.canvas.getContext("2d");
+        const context = this.canvas.getContext("2d", { willReadFrequently: true });
         this.canvas.width = this.videoElement.videoWidth;
         this.canvas.height = this.videoElement.videoHeight;
         context.drawImage(this.videoElement, 0, 0, this.canvas.width, this.canvas.height);
