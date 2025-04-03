@@ -54,7 +54,7 @@ class CameraHandler {
     }
 
     async startQrScanner() {
-        if (!this.canvasQR) return;
+        if (!this.canvas) return;
         this.isScanning = true;
         this.scanFrameForQr();
     }
