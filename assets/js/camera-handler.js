@@ -62,7 +62,7 @@ class CameraHandler {
     scanFrameForQr() {
         if (!this.isScanning) return;
 
-        const context = this.canvas.getContext("2d", { willReadFrequently: true });
+        const context = this.canvas.getContext("2d");
         this.canvas.width = this.videoElement.videoWidth;
         this.canvas.height = this.videoElement.videoHeight;
         context.drawImage(this.videoElement, 0, 0, this.canvas.width, this.canvas.height);
@@ -121,10 +121,8 @@ class CameraHandler {
     }
 
     async uploadFile(file, dataQr) {
-
         // let busyLoad = new BusyLoader({ text: "Leyendo datos de la tarjeta...", textColor: "#000000", backgroundColor: "#ffffff", fullScreen: false, targetSelector: "#container-camera" });
         // busyLoad.start();
-
         let formData = new FormData();
 
         if (file != null) { formData.append("imageFile", file); }
