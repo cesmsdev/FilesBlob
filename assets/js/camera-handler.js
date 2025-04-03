@@ -62,6 +62,12 @@ class CameraHandler {
     scanFrameForQr() {
         if (!this.isScanning) return;
 
+        if (this.videoElement.videoWidth === 0 || this.videoElement.videoHeight === 0) {
+            console.warn("El video no tiene dimensiones aún. Reintentando...");
+            requestAnimationFrame(() => this.scanFrameForQr());
+            return;
+        }
+
         const context = this.canvas.getContext("2d");
         this.canvas.width = this.videoElement.videoWidth;
         this.canvas.height = this.videoElement.videoHeight;
