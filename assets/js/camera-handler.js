@@ -110,6 +110,7 @@ class CameraHandler {
             return;
         }
 
+        this.isScanning = false;
         const context = this.canvas.getContext("2d", { willReadFrequently: true });
         this.canvas.width = this.videoElement.videoWidth;
         this.canvas.height = this.videoElement.videoHeight;
