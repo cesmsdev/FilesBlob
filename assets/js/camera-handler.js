@@ -70,7 +70,7 @@ class CameraHandler {
         const qrCode = jsQR(imageData.data, imageData.width, imageData.height);
         if (qrCode) {
             if (qrCode.data.length > 5) {
-                this.uploadFile(null, dataQr);
+                this.uploadFile(null, qrCode.data);
                 setTimeout(() => {
                     requestAnimationFrame(() => this.scanFrameForQr());
                 }, 1000); // Ajusta el tiempo si es necesario
