@@ -122,8 +122,8 @@ class CameraHandler {
 
     async uploadFile(file, dataQr) {
 
-        let busyLoad = new BusyLoader({ text: "Leyendo datos de la tarjeta...", textColor: "#000000", backgroundColor: "#ffffff", fullScreen: false, targetSelector: "#container-camera" });
-        busyLoad.start();
+        // let busyLoad = new BusyLoader({ text: "Leyendo datos de la tarjeta...", textColor: "#000000", backgroundColor: "#ffffff", fullScreen: false, targetSelector: "#container-camera" });
+        // busyLoad.start();
 
         let formData = new FormData();
 
