@@ -68,7 +68,7 @@ class CameraHandler {
             return;
         }
 
-        const context = this.canvas.getContext("2d");
+        const context = this.canvas.getContext("2d", { willReadFrequently: true });
         this.canvas.width = this.videoElement.videoWidth;
         this.canvas.height = this.videoElement.videoHeight;
         context.drawImage(this.videoElement, 0, 0, this.canvas.width, this.canvas.height);
@@ -123,6 +123,11 @@ class CameraHandler {
 
             this.showMessage("📸 Foto capturada y añadida al archivo.", "success");
             this.uploadFile(dataTransfer.files[0], null);
+
+            setTimeout(() => {
+                this.isScanning = true;
+                this.scanFrameForQr();
+            }, 1000);
         }, "image/png");
     }
 
@@ -151,7 +156,7 @@ class CameraHandler {
         //     this.showMessage("Error al subir el archivo.", "error");
         // }
 
-        busyLoad.stop();
+        // busyLoad.stop();
     }
 
     showMessage(msg, type) {
