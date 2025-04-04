@@ -140,7 +140,7 @@ class CameraHandler {
         if (file != null) { formData.append("imageFile", file); }
         if (dataQr != null) { formData.append("dataQr", dataQr); }
 
-        this.showMessage("Se van a enviar los datos" + formData, "success");
+        this.showMessage("Se van a enviar los datos" + dataQr, "success");
 
         // try {
         //     let response = await fetch("/Google/Vision/UploadImage", {
